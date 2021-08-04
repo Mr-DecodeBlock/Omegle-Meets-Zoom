@@ -10,7 +10,7 @@
 ## Features
 
  Click to Video Call Around the world with any stranger (omegle)  <br>
- Send a dedicated link to video call with your friend and family (zoom)  <br>
+ Send a dedicated link to Video call with your friend and family (zoom)  <br>
  See how many users are online from around the Globe. <br>
  Mobile and desktop friendly! <br>
 
