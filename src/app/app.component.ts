@@ -14,7 +14,6 @@ export type clientMessageResponse = {
 })
 export class AppComponent implements OnInit{
   socket;
-  serverMessage;
   room;
 
 
@@ -24,26 +23,29 @@ export class AppComponent implements OnInit{
   // this.socket = io('https://my-node-app-web-rtc.herokuapp.com')
     this.socket = io('http://localhost:3000')
 
+    this.socket.on('send-message',(msg)=> {
+      console.log(msg)
+    })
+
     this.socket.on('room',(room)=> {
       //if room is not set
-      if(!!room) {
+
         this.room = room
         console.log('entered a room')
         console.log(room)
         let messageModel: clientMessageResponse ={
           room : room,
-          message : 'Hello from the other side'
+          message : 'USERS CONNECTED'
         }
+      console.log('sending hello')
         this.socket.emit('send-message', messageModel)
-      }
+
+
 
     })
 
-    this.socket.on('send-message',(msg)=> {
-      console.log(msg)
-    })
+
 
   }
 
-  title = 'Omegle-Meets-Zoom';
 }
