@@ -20,8 +20,8 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     console.log('connecting with server....')
 
-   this.socket = io('https://my-node-app-web-rtc.herokuapp.com')
-   // this.socket = io('http://localhost:3000')
+  // this.socket = io('https://my-node-app-web-rtc.herokuapp.com')
+    this.socket = io('http://localhost:3000')
 
     this.socket.on('send-message',(msg)=> {
       console.log(msg)
