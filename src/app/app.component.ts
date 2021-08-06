@@ -13,7 +13,7 @@ export type clientMessageResponse = {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent {
   socket;
   room;
   localPeerConnection;
@@ -28,23 +28,20 @@ export class AppComponent implements OnInit{
     ]
   };
 
-
-
-  ngOnInit() {
-
+  startConnection() {
     this.initiateWebRtc()
     this.registerListener()
 
     this.socket = io('https://my-node-app-web-rtc.herokuapp.com')
-   // this.socket = io('http://localhost:3000')
+    // this.socket = io('http://localhost:3000')
 
     this.socket.on('room',(room)=> {
-        this.room = room
-        let messageModel: clientMessageResponse ={
-          room : room,
-          message : 'USERS CONNECTED'
-        }
-        this.socket.emit('hello-message', messageModel)
+      this.room = room
+      let messageModel: clientMessageResponse ={
+        room : room,
+        message : 'USERS CONNECTED'
+      }
+      this.socket.emit('hello-message', messageModel)
 
     })
 
@@ -102,7 +99,6 @@ export class AppComponent implements OnInit{
         this.myOwnMessage = false
       }
     })
-
   }
 
   makeVideoConnection() {
