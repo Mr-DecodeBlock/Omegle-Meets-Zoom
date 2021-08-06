@@ -1,12 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
-
 html, body {
   height: 100%;
   background-color: lavender;
 }
-
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
 * {
   font-family: Comfortaa;
+}
+
+.main-container {
+  height:85%;
+  padding-bottom: 1%;
 }
