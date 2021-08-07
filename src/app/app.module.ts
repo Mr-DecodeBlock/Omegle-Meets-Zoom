@@ -14,6 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonService } from './service/common.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { MatButtonModule } from '@angular/material/button';
     FlexLayoutModule,
     MatButtonModule,
   ],
-  providers: [],
+  providers: [CommonService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
