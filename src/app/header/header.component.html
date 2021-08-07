@@ -1,10 +1,16 @@
 <mat-toolbar color="primary">
-  <mat-nav-list fxLayoutAlign="row">
-    <a  fxHide.gt-sm="true" mat-list-item
-    ><mat-icon>menu
-    </mat-icon></a>
-    <a mat-list-item>
-      Omegle <mat-icon>videocam</mat-icon> Zoom
+
+<!--  for large screen-->
+  <mat-nav-list fxHide.lt-md="true" fxLayoutAlign="row">
+    <a   mat-list-item>
+      Omegle <mat-icon>videocam</mat-icon> Zoom large
+    </a>
+  </mat-nav-list>
+
+  <!--  for mobile screen-->
+  <mat-nav-list fxShow.lt-md="true" fxLayoutAlign="center">
+    <a   mat-list-item>
+      Omegle <mat-icon>videocam</mat-icon> Zoom mobile
     </a>
   </mat-nav-list>
 </mat-toolbar>

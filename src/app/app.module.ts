@@ -13,6 +13,7 @@ import { RoutingModule } from './routing.module';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatListModule,
     MatIconModule,
     FlexLayoutModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
