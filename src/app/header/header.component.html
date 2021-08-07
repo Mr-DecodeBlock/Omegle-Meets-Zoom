@@ -3,7 +3,7 @@
 <mat-toolbar fxShow.gt-sm="true" fxHide.lt-md="true"  color="primary" >
 
   <mat-nav-list fxLayout>
-    <a   mat-list-item>
+    <a   mat-list-item routerLink="/home">
       Omegle <mat-icon>videocam</mat-icon> Zoom
     </a>
   </mat-nav-list>
@@ -15,7 +15,7 @@
 <!--  for mobile screen-->
 <mat-toolbar  fxShow.lt-md="true" fxHide.gt-sm="true" color="primary" fxLayoutAlign="center">
 
-  <mat-nav-list  fxLayout fxLayoutAlign="center" >
+  <mat-nav-list  fxLayout fxLayoutAlign="center" routerLink="/home" >
     <a   mat-list-item>
       Omegle <mat-icon>videocam</mat-icon> Zoom
     </a>
