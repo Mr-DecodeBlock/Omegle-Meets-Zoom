@@ -1,6 +1,6 @@
 
-<!--for medium and large screen,the code is following.-->
-<span fxHide.lt-md="true">
+<!--  for large screen-->
+<span fxShow.gt-sm="true" fxHide.lt-md="true">
   <div  class="text-center main-container" fxLayout fxLayoutAlign="center center">
     <div fxFlex="10"></div>
 
@@ -34,28 +34,26 @@
 </span>
 
 
+
+
+
+
 <!--for mobile screen-->
-<span fxShow.lt-md="true">
-  <div  class="text-center" >
-    <div fxLayout="column">
+<span fxShow.lt-md="true" fxHide.gt-sm="true">
+    <div class="text-center m-5" fxLayout="column">
       <h1 > Omegle Meets Zoom.</h1>
       <img src="assets/Main.svg" />
-      <p> Join The Most Fascinating Mixture of two World Best Apps</p>
+      <h4> Join The Most Fascinating Mixture of two World Best Apps</h4>
       <button  mat-raised-button color="primary" style="margin-bottom: 5%"><mat-icon>video_call</mat-icon> Call Someone you know!</button>
       <button  mat-raised-button color="warn"><mat-icon>video_call</mat-icon> Call Someone you dont know!</button>
 
-
-    </div>
-
   </div>
 
-  <div style="padding-top: 10%" class="text-center" >
-    <div fxLayout="column">
-      <h1 > Omegle Meets Zoom.</h1>
-      <img src="assets/Main.svg" />
-      <p> Join The Most Fascinating Mixture of two World Best Apps</p>
+  <div class="m-5 text-center"  fxLayout="column">
+    <h1 >Connect With The One You Love or Meet a Stranger!</h1>
+      <img src="assets/Meeting.svg" />
+      <p > Talk with your family or friends at any instant.<br> Bored? Meet any stranger from any corner of the world!</p>
     </div>
 
-  </div>
 </span>
 
