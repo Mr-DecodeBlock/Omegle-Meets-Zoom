@@ -1,0 +1,8 @@
+.video {
+  border : 5px solid #512888;
+  border-radius: 10px;
+}
+
+.mat-raised-button{
+  width: 20%;
+}

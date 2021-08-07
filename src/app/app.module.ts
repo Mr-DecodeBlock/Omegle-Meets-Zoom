@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonService } from './service/common.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { CommonService } from './service/common.service';
     MatIconModule,
     FlexLayoutModule,
     MatButtonModule,
+    NgxSpinnerModule,
   ],
   providers: [CommonService],
   bootstrap: [AppComponent],

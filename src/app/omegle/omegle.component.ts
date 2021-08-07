@@ -3,6 +3,7 @@ import { io } from 'socket.io-client';
 import { clientMessageResponse } from '../app.component';
 import { Router } from '@angular/router';
 import { CommonService } from '../service/common.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-omegle',
@@ -10,17 +11,16 @@ import { CommonService } from '../service/common.service';
   styleUrls: ['./omegle.component.css'],
 })
 export class OmegleComponent implements OnInit {
-  constructor(private router: Router, private commonSrv: CommonService) {}
-
-  ngOnInit(): void {
-    console.log(this.router.url);
-    this.commonSrv.routerEmitter.emit(this.router.url);
-  }
+  constructor(
+    private router: Router,
+    private commonSrv: CommonService,
+    private spinner: NgxSpinnerService
+  ) {}
 
   socket;
   room;
   localPeerConnection;
-  remoteMediaStream;
+  remoteMediaStream = new MediaStream();
   myOwnMessage = false;
   @ViewChild('localVideo', { static: true }) localVideoHtmlElement: ElementRef;
   @ViewChild('remoteVideo', { static: true })
@@ -28,21 +28,23 @@ export class OmegleComponent implements OnInit {
   iceConfiguration = {
     iceServers: [
       {
-        urls: [
-          'stun:stun1.l.google.com:19302',
-          'stun:stun2.l.google.com:19302',
-        ],
+        urls: ['stun:stun1.l.google.com:19302'],
       },
     ],
   };
+  disconnectCall: boolean = true;
+  disconnection: boolean = false;
 
-  startConnection() {
+  ngOnInit(): void {
     this.initiateWebRtc();
-    this.registerListener();
+    this.commonSrv.routerEmitter.emit(this.router.url);
+  }
 
+  start() {
+    this.spinner.show('MainScreenSpinner');
+    this.disconnectCall = false;
     // this.socket = io('https://my-node-app-web-rtc.herokuapp.com');
     this.socket = io('http://localhost:3000');
-
     this.socket.on('room', (room) => {
       this.room = room;
       let messageModel: clientMessageResponse = {
@@ -58,6 +60,11 @@ export class OmegleComponent implements OnInit {
         this.makeVideoConnection();
       }
     });
+
+    //info :
+    //1 -> user 2 is creating answer
+    //2-> user 1 is accepting
+    //3 -> setting ice candidates.
 
     this.socket.on('send-message', (body) => {
       if (!this.myOwnMessage) {
@@ -81,6 +88,7 @@ export class OmegleComponent implements OnInit {
                     this.myOwnMessage = true;
                   });
               });
+              this.spinner.hide('MainScreenSpinner');
             });
         }
 
@@ -91,6 +99,7 @@ export class OmegleComponent implements OnInit {
           this.localPeerConnection.setRemoteDescription(
             new RTCSessionDescription(body.message)
           );
+          this.spinner.hide('MainScreenSpinner');
         }
 
         if (body?.info === '3') {
@@ -132,11 +141,16 @@ export class OmegleComponent implements OnInit {
           this.remoteMediaStream;
         this.localPeerConnection.addStream(localMediaStream);
       });
+    this.registerListener();
+  }
+
+  closeVideoConnection() {
+    this.localPeerConnection.close();
   }
 
   registerListener() {
     //this will run when we will get remote media stream after setup successfully
-
+    console.log('running listener');
     this.localPeerConnection.ontrack = (event) => {
       console.log('adding track');
       this.remoteMediaStream = event.streams[0];
