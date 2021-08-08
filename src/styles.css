@@ -10,3 +10,8 @@ html, body {
   height:85%;
   padding-bottom: 1%;
 }
+
+.snackbar-class {
+  background: #d22929;
+  color : white;
+}

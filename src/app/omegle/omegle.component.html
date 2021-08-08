@@ -1,15 +1,8 @@
 <!--for large screen -->
-<div *ngIf="disconnection" class="text-center alert alert-danger" role="alert">
-  This is a primary alert—check it out!
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<button mat-raised-button (click)="this.disconnection=true">CLICK</button>
 <div class="main-container">
   <div  class="m-3" fxLayout fxLayoutAlign="center center">
     <video class="video" autoplay #localVideo ></video>
-    <video  class="video" autoplay #remoteVideo ></video>
+    <video  class="video" autoplay #remoteVideo [hidden]="!isConnected" ></video>
   </div>
   <div  fxLayout  fxLayoutAlign="space-around center">
     <button style="background-color: seagreen"  mat-raised-button (click)="start()"><mat-icon>video_camera_front</mat-icon> Find Someone!</button>

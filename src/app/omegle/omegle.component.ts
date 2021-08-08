@@ -1,10 +1,16 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Injectable,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { io } from 'socket.io-client';
 import { clientMessageResponse } from '../app.component';
 import { Router } from '@angular/router';
 import { CommonService } from '../service/common.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-omegle',
   templateUrl: './omegle.component.html',
@@ -14,7 +20,8 @@ export class OmegleComponent implements OnInit {
   constructor(
     private router: Router,
     private commonSrv: CommonService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private matSnackBar: MatSnackBar
   ) {}
 
   socket;
@@ -33,20 +40,22 @@ export class OmegleComponent implements OnInit {
     ],
   };
   disableDisconnectCall: boolean = true;
-  disconnection: boolean = false;
+  isConnected: boolean = false;
 
   ngOnInit(): void {
-    this.initiateWebRtc();
     this.commonSrv.routerEmitter.emit(this.router.url);
+    this.setUpLocalVideo();
   }
 
   start() {
+    this.initiateWebRtc();
     this.spinner.show('MainScreenSpinner');
     this.disableDisconnectCall = false;
-    // this.socket = io('https://my-node-app-web-rtc.herokuapp.com');
-    this.socket = io('http://localhost:3000', {
-      path: '/omegle',
-    });
+     this.socket = io('https://my-node-app-web-rtc.herokuapp.com',{
+     path : '/omegle'});
+    // this.socket = io('http://localhost:3000', {
+    //   path: '/omegle',
+    // });
     this.socket.on('room', (room) => {
       this.room = room;
       let messageModel: clientMessageResponse = {
@@ -91,6 +100,7 @@ export class OmegleComponent implements OnInit {
                   });
               });
               this.spinner.hide('MainScreenSpinner');
+              this.isConnected = true;
             });
         }
 
@@ -102,6 +112,7 @@ export class OmegleComponent implements OnInit {
             new RTCSessionDescription(body.message)
           );
           this.spinner.hide('MainScreenSpinner');
+          this.isConnected = true;
         }
 
         if (body?.info === '3') {
@@ -138,7 +149,6 @@ export class OmegleComponent implements OnInit {
     navigator.mediaDevices
       .getUserMedia({ audio: true, video: true })
       .then((localMediaStream) => {
-        this.localVideoHtmlElement.nativeElement.srcObject = localMediaStream;
         this.remoteVideoHtmlElement.nativeElement.srcObject =
           this.remoteMediaStream;
         this.localPeerConnection.addStream(localMediaStream);
@@ -146,8 +156,19 @@ export class OmegleComponent implements OnInit {
     this.registerListener();
   }
 
+  setUpLocalVideo() {
+    navigator.mediaDevices
+      .getUserMedia({ audio: true, video: true })
+      .then((localMediaStream) => {
+        this.localVideoHtmlElement.nativeElement.srcObject = localMediaStream;
+      });
+  }
+
   closeVideoConnection() {
     this.localPeerConnection.close();
+    this.disableDisconnectCall = true;
+    this.isConnected = false;
+    this.socket.emit('force-disconnect', '');
   }
 
   registerListener() {
@@ -174,14 +195,20 @@ export class OmegleComponent implements OnInit {
     };
 
     this.localPeerConnection.onconnectionstatechange = (event) => {
-      console.log('boisessssssss');
       if (this.localPeerConnection.connectionState === 'disconnected') {
-        console.log('RAN DISSSSS');
-        this.disconnection = true;
+        this.matSnackBar.open(
+          'User has Disconnected. Press Find For New User',
+          'X',
+          {
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+            duration: 4000,
+            panelClass: ['snackbar-class'],
+          }
+        );
         this.disableDisconnectCall = true;
-        setTimeout(() => {
-          this.disconnection = false;
-        }, 5000);
+        this.isConnected = false;
+        this.socket.emit('force-disconnect', '');
       }
     };
   }

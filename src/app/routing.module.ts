@@ -31,6 +31,7 @@ const routes: Routes = [
   {
     path: 'omegle',
     component: OmegleComponent,
+    canDeactivate: [CanDeactivateService],
   },
 
   {
