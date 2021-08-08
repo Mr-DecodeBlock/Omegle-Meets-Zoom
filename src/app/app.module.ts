@@ -16,6 +16,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonService } from './service/common.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MeetingComponent } from './zoom/meeting/meeting.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ZoomComponent,
     OmegleComponent,
     ErrorPageComponent,
+    MeetingComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +41,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     FlexLayoutModule,
     MatButtonModule,
     NgxSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [CommonService],
   bootstrap: [AppComponent],

@@ -5,6 +5,7 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
+<button mat-raised-button (click)="this.disconnection=true">CLICK</button>
 <div class="main-container">
   <div  class="m-3" fxLayout fxLayoutAlign="center center">
     <video class="video" autoplay #localVideo ></video>
@@ -12,7 +13,7 @@
   </div>
   <div  fxLayout  fxLayoutAlign="space-around center">
     <button style="background-color: seagreen"  mat-raised-button (click)="start()"><mat-icon>video_camera_front</mat-icon> Find Someone!</button>
-    <button  mat-raised-button (click)="closeVideoConnection()" [disabled]="disconnectCall" ><mat-icon>call_end</mat-icon>Disconnect!</button>
+    <button  mat-raised-button (click)="closeVideoConnection()" [disabled]="disableDisconnectCall" ><mat-icon>call_end</mat-icon>Disconnect!</button>
   </div>
 </div>
 

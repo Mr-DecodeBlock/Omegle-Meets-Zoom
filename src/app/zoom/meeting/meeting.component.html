@@ -1,0 +1,25 @@
+<!--for large screen -->
+<h4 class="text-center">This Room Id is {{room}}</h4>
+<div class="main-container">
+  <div  class="m-3" fxLayout fxLayoutAlign="center center">
+    <video class="video" autoplay #localVideo ></video>
+    <video  class="video" autoplay #remoteVideo ></video>
+  </div>
+  <div  fxLayout  fxLayoutAlign="space-around center">
+    <button  mat-raised-button ><mat-icon>call_end</mat-icon>End Meeting.</button>
+  </div>
+</div>
+
+
+<ngx-spinner
+  name="MainScreenSpinner"
+  bdColor = "rgba(0,0,0,0.6)"
+  size = "medium" color = "#512888"
+  type = "square-jelly-box" [fullScreen] = "true"
+><p style="color: white" > Finding Partner For You.... </p>
+</ngx-spinner>
+
+
+
+
+

@@ -4,6 +4,8 @@ import { HomeComponent } from './home/home.component';
 import { ZoomComponent } from './zoom/zoom.component';
 import { OmegleComponent } from './omegle/omegle.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { MeetingComponent } from './zoom/meeting/meeting.component';
+import { CanDeactivateService } from './service/can-deactivate.service';
 
 const routes: Routes = [
   {
@@ -20,6 +22,10 @@ const routes: Routes = [
   {
     path: 'zoom',
     component: ZoomComponent,
+    children: [
+      { path: 'meeting/:meetingId', component: MeetingComponent },
+      { path: 'meeting', component: MeetingComponent },
+    ],
   },
 
   {

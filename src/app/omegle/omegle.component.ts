@@ -28,11 +28,11 @@ export class OmegleComponent implements OnInit {
   iceConfiguration = {
     iceServers: [
       {
-        urls: ['stun:stun1.l.google.com:19302'],
+        urls: ['stun:stun3.l.google.com:19302'],
       },
     ],
   };
-  disconnectCall: boolean = true;
+  disableDisconnectCall: boolean = true;
   disconnection: boolean = false;
 
   ngOnInit(): void {
@@ -42,9 +42,11 @@ export class OmegleComponent implements OnInit {
 
   start() {
     this.spinner.show('MainScreenSpinner');
-    this.disconnectCall = false;
+    this.disableDisconnectCall = false;
     // this.socket = io('https://my-node-app-web-rtc.herokuapp.com');
-    this.socket = io('http://localhost:3000');
+    this.socket = io('http://localhost:3000', {
+      path: '/omegle',
+    });
     this.socket.on('room', (room) => {
       this.room = room;
       let messageModel: clientMessageResponse = {
@@ -168,6 +170,18 @@ export class OmegleComponent implements OnInit {
         };
         this.socket.emit('send-message', messageModel);
         this.myOwnMessage = true;
+      }
+    };
+
+    this.localPeerConnection.onconnectionstatechange = (event) => {
+      console.log('boisessssssss');
+      if (this.localPeerConnection.connectionState === 'disconnected') {
+        console.log('RAN DISSSSS');
+        this.disconnection = true;
+        this.disableDisconnectCall = true;
+        setTimeout(() => {
+          this.disconnection = false;
+        }, 5000);
       }
     };
   }
