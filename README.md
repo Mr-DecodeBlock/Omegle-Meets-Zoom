@@ -1,7 +1,7 @@
 # Omegle-Meets-Zoom 
 #### Fascinating Video Calling Application that inspires world renown app zoom & omegle.
-## It is LIVE but (UNDER-DEVELOPMENT)
-https://omegle-meets-zoom.netlify.app
+## It is LIVE but (UNDER-DEVELOPMENT) : https://omegle-meets-zoom.netlify.app
+ 
 
 
 
