@@ -24,20 +24,28 @@ export class MeetingComponent implements OnInit {
   iceConfiguration = {
     iceServers: [
       {
-        urls: ['stun:stun3.l.google.com:19305'],
+        urls: ['stun:stun1.l.google.com:19305'],
       },
     ],
   };
   isConnected = false;
 
   ngOnInit(): void {
-    this.socket = io('http://localhost:3000', {
+    this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
       path: '/zoom',
     });
-    this.start();
-    // this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
-    //   path: '/omegle',
+    // this.socket = io('http://localhost:3000', {
+    //   path: '/zoom',
     // });
+    this.start();
+
+  }
+
+  start() {
+    this.setUpLocalVideo();
+    this.initiateWebRtc();
+    console.log('already,start function fired.')
+
 
     this.meetingId = this.route.snapshot.params.meetingId;
     if (this.meetingId) {
@@ -66,12 +74,6 @@ export class MeetingComponent implements OnInit {
       });
 
     }
-  }
-
-  start() {
-    this.setUpLocalVideo();
-    this.initiateWebRtc();
-    console.log('already,start function fired.')
 
 
     this.socket.on('hello-message', (body) => {

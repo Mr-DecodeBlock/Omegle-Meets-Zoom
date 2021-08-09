@@ -51,12 +51,12 @@ export class OmegleComponent implements OnInit {
     this.initiateWebRtc();
     this.spinner.show('MainScreenSpinner');
     this.disableDisconnectCall = false;
-    // this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
-    //   path: '/omegle',
-    // });
-    this.socket = io('http://localhost:3000', {
+    this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
       path: '/omegle',
     });
+    // this.socket = io('http://localhost:3000', {
+    //   path: '/omegle',
+    // });
     this.socket.on('room', (room) => {
       this.room = room;
       let messageModel: clientMessageResponse = {

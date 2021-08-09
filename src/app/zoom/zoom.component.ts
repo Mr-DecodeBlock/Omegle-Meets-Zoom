@@ -15,9 +15,7 @@ export class ZoomComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private commonSrv: CommonService) {}
 
   ngOnInit(): void {
-    this.socket = io('http://localhost:3000', {
-      path: '/zoom',
-    });
+
     console.log(this.router.url);
     this.commonSrv.routerEmitter.emit(this.router.url);
   }
@@ -28,9 +26,12 @@ export class ZoomComponent implements OnInit, OnDestroy {
 
   checkCode(code: string) {
 
-    // this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
-    //   path: '/omegle',
+    // this.socket = io('http://localhost:3000', {
+    //   path: '/zoom',
     // });
+    this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
+      path: '/zoom',
+    });
     //check if any room available on server with this roomId
     this.socket.emit('room-available', code);
     this.socket.on('room-available', (body) => {
