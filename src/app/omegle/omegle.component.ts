@@ -60,8 +60,8 @@ export class OmegleComponent implements OnInit, OnDestroy {
       }
       else {
         this.fxAlignment = 'row'
-        this.width = '700'
-        this.height = '525'
+        this.width = '600'
+        this.height = '450'
       }
     })
     this.commonSrv.routerEmitter.emit(this.router.url);
@@ -252,7 +252,7 @@ export class OmegleComponent implements OnInit, OnDestroy {
           }
         );
       }
-    },8000)
+    },15000)
 
   }
 

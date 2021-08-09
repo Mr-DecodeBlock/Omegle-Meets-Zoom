@@ -3,6 +3,7 @@ import { io } from 'socket.io-client';
 import { ActivatedRoute, Router } from '@angular/router';
 import {clientMessageResponse} from "../../app.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {BreakpointObserver} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-meeting',
@@ -11,7 +12,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class MeetingComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private router: Router,
-              private matSnackBar : MatSnackBar) {}
+              private matSnackBar : MatSnackBar,
+              private breakPoint$: BreakpointObserver) {}
   meetingId;
   socket;
   room;
@@ -24,19 +26,38 @@ export class MeetingComponent implements OnInit, OnDestroy {
   iceConfiguration = {
     iceServers: [
       {
-        urls: ['stun:stun1.l.google.com:19305'],
+        urls: ['stun:stun2.l.google.com:19305'],
       },
     ],
   };
   isConnected = false;
+  fxAlignment;
+  width;
+  height;
+  status = 'Meeting ID';
 
   ngOnInit(): void {
+    this.breakPoint$.observe('(max-width:768px)').subscribe((data)=> {
+      if(data.matches) {
+        this.fxAlignment = 'column'
+        this.width = '330'
+        this.height = '250'
+      }
+      else {
+        this.fxAlignment = 'row'
+        this.width = '600'
+        this.height = '450'
+      }
+    })
+
+
     // this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
     //   path: '/zoom',
     // });
     this.socket = io('http://localhost:3000', {
       path: '/zoom',
     });
+
     this.start();
 
   }
@@ -166,6 +187,8 @@ export class MeetingComponent implements OnInit, OnDestroy {
   }
 
   closeVideoConnection() {
+    this.status = 'Meeting has Ended!'
+    this.room = ''
     this.localPeerConnection.close();
     this.isConnected = false;
     this.socket.emit('force-disconnect', '');

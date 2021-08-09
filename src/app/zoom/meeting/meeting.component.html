@@ -1,6 +1,6 @@
 <!--for large screen -->
+<p class="text-center" style="padding-top: 1%">{{status}}</p>
 <div fxLayout="column" fxLayoutAlign="center center">
-  <p class="text-center" style="padding-top: 1%">Meeting ID</p>
   <mat-form-field appearance="fill">
     <input type="text"
            matInput
@@ -10,18 +10,15 @@
     <mat-icon  (click)="copyMeetingId(inputMeetingId)" matSuffix >
       content_copy</mat-icon>
   </mat-form-field>
-
-</div>
-
-
 <div class="main-container">
-  <div  class="m-3" fxLayout fxLayoutAlign="center center">
-    <video class="video" autoplay #localVideo ></video>
-    <video  class="video" autoplay #remoteVideo [hidden] = "!isConnected" ></video>
+  <div  class="m-3" [fxLayout]="this.fxAlignment" fxLayoutAlign="center center">
+    <video  class="video" [width]="this.width" [height]="this.height"  autoplay controls  #remoteVideo  [hidden]="!isConnected" ></video>
+    <video  class="video" [width]="this.width" [height]="this.height"  autoplay controls #localVideo ></video>
   </div>
   <div  fxLayout  fxLayoutAlign="space-around center">
-    <button  mat-raised-button (click)="closeVideoConnection()" ><mat-icon>call_end</mat-icon>End Meeting.</button>
+    <button  #endButton mat-raised-button (click)="closeVideoConnection(); endButton.disabled=true;" ><mat-icon>call_end</mat-icon>End Meeting.</button>
   </div>
+</div>
 </div>
 
 
@@ -30,7 +27,7 @@
   bdColor = "rgba(0,0,0,0.6)"
   size = "medium" color = "#512888"
   type = "square-jelly-box" [fullScreen] = "true"
-><p style="color: white" > Finding Partner For You.... </p>
+><p style="color: white" > Searching.. </p>
 </ngx-spinner>
 
 

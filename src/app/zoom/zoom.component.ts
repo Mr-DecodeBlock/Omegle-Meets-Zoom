@@ -9,15 +9,18 @@ import { io } from 'socket.io-client';
   styleUrls: ['./zoom.component.css'],
 })
 export class ZoomComponent implements OnInit, OnDestroy {
+
+  constructor(private router: Router, private commonSrv: CommonService) {}
+
   socket;
   status: string;
   codeInput: boolean = true;
-  constructor(private router: Router, private commonSrv: CommonService) {}
 
   ngOnInit(): void {
-
-    console.log(this.router.url);
     this.commonSrv.routerEmitter.emit(this.router.url);
+    if(this.router.url === '/zoom/meeting') {
+      this.codeInput = false
+    }
   }
 
   ngOnDestroy() {
@@ -26,13 +29,12 @@ export class ZoomComponent implements OnInit, OnDestroy {
 
   checkCode(code: string) {
     this.status='Please Wait..'
-
-    // this.socket = io('http://localhost:3000', {
-    //   path: '/zoom',
-    // });
-    this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
+    this.socket = io('http://localhost:3000', {
       path: '/zoom',
     });
+    // this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
+    //   path: '/zoom',
+    // });
     //check if any room available on server with this roomId
     this.socket.emit('room-available', code);
     this.socket.on('room-available', (body) => {
