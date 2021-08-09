@@ -4,10 +4,10 @@
   <mat-form-field appearance="fill">
     <input type="text"
            matInput
-           [value]="this.room  | shorten"
+           [value]="this.room"
            readonly
            #inputMeetingId>
-    <mat-icon  matSuffix >
+    <mat-icon  (click)="copyMeetingId(inputMeetingId)" matSuffix >
       content_copy</mat-icon>
   </mat-form-field>
 

@@ -1,13 +1,23 @@
 <!--for large screen -->
-<div class="main-container">
-  <div  class="m-3" fxLayout fxLayoutAlign="center center">
-    <video class="video" autoplay #localVideo ></video>
-    <video  class="video" autoplay #remoteVideo [hidden]="!isConnected" ></video>
+<div class="main-container" >
+  <div  class="m-3" [fxLayout]="this.fxAlignment" fxLayoutAlign="center center">
+    <video  class="video" [width]="this.width" [height]="this.height"  autoplay controls  #remoteVideo  [hidden]="!isConnected" ></video>
+    <video  class="video" [width]="this.width" [height]="this.height"  autoplay controls #localVideo ></video>
+
   </div>
-  <div  fxLayout  fxLayoutAlign="space-around center">
+
+<!--  for large screen-->
+  <div  fxShow.gt-sm="true" fxHide.lt-md="true" fxLayout  fxLayoutAlign="space-around center">
     <button style="background-color: lightseagreen; color : white"  mat-raised-button (click)="start()"><mat-icon>video_camera_front</mat-icon> Find Someone!</button>
     <button  mat-raised-button (click)="closeVideoConnection()" [disabled]="disableDisconnectCall" ><mat-icon>call_end</mat-icon>Disconnect!</button>
   </div>
+
+<!--  for mobile-->
+  <div  fxShow.lt-md="true" fxHide.gt-sm="true" fxLayout  fxLayoutAlign="space-evenly center" >
+    <button style="background-color: lightseagreen; color : white"  mat-fab (click)="start()"><mat-icon>video_camera_front</mat-icon></button>
+    <button  mat-fab (click)="closeVideoConnection()" [disabled]="disableDisconnectCall" ><mat-icon>call_end</mat-icon></button>
+  </div>
+
 </div>
 
 

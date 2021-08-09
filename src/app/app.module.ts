@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MeetingComponent } from './zoom/meeting/meeting.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ShortenPipe } from './pipes/shorten.pipe';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ShortenPipe } from './pipes/shorten.pipe';
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
   providers: [CommonService],
   bootstrap: [AppComponent],

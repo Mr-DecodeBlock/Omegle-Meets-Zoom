@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 import { CommonService } from '../service/common.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {Observable} from "rxjs";
+import {BreakpointObserver} from "@angular/cdk/layout";
 @Component({
   selector: 'app-omegle',
   templateUrl: './omegle.component.html',
@@ -21,8 +23,11 @@ export class OmegleComponent implements OnInit, OnDestroy {
     private router: Router,
     private commonSrv: CommonService,
     private spinner: NgxSpinnerService,
-    private matSnackBar: MatSnackBar
-  ) {}
+    private matSnackBar: MatSnackBar,
+    private breakPoint$ : BreakpointObserver
+  ) {
+
+  }
 
   socket;
   room;
@@ -35,15 +40,30 @@ export class OmegleComponent implements OnInit, OnDestroy {
   iceConfiguration = {
     iceServers: [
       {
-        urls: ['stun:stun.l.google.com:19302',
+        urls: ['stun:stun3.l.google.com:19302',
         ],
       },
     ],
   };
   disableDisconnectCall: boolean = true;
   isConnected: boolean = false;
+  fxAlignment;
+  width;
+  height;
 
   ngOnInit(): void {
+    this.breakPoint$.observe('(max-width:768px)').subscribe((data)=> {
+      if(data.matches) {
+        this.fxAlignment = 'column'
+        this.width = '330'
+        this.height = '250'
+      }
+      else {
+        this.fxAlignment = 'row'
+        this.width = '700'
+        this.height = '525'
+      }
+    })
     this.commonSrv.routerEmitter.emit(this.router.url);
     this.setUpLocalVideo();
   }
