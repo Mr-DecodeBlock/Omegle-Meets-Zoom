@@ -3,10 +3,10 @@
 <div class="main-container">
   <div  class="m-3" fxLayout fxLayoutAlign="center center">
     <video class="video" autoplay #localVideo ></video>
-    <video  class="video" autoplay #remoteVideo ></video>
+    <video  class="video" autoplay #remoteVideo [hidden] = "!isConnected" ></video>
   </div>
   <div  fxLayout  fxLayoutAlign="space-around center">
-    <button  mat-raised-button ><mat-icon>call_end</mat-icon>End Meeting.</button>
+    <button  mat-raised-button (click)="closeVideoConnection()" ><mat-icon>call_end</mat-icon>End Meeting.</button>
   </div>
 </div>
 
