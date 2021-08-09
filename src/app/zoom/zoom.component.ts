@@ -21,7 +21,7 @@ export class ZoomComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.socket.emit('force-disconnect','')
+    this.socket?.emit('force-disconnect','')
   }
 
   checkCode(code: string) {

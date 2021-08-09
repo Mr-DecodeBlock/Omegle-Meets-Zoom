@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { io } from 'socket.io-client';
 import { ActivatedRoute, Router } from '@angular/router';
 import {clientMessageResponse} from "../../app.component";
@@ -9,7 +9,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   templateUrl: './meeting.component.html',
   styleUrls: ['./meeting.component.css'],
 })
-export class MeetingComponent implements OnInit {
+export class MeetingComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private router: Router,
               private matSnackBar : MatSnackBar) {}
   meetingId;
@@ -221,5 +221,8 @@ export class MeetingComponent implements OnInit {
       });
   }
 
+  ngOnDestroy() {
+    this.socket?.emit('force-disconnect','')
+  }
 
 }

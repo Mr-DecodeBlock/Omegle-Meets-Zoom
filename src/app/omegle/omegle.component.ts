@@ -1,7 +1,7 @@
 import {
   Component,
   ElementRef,
-  Injectable,
+  Injectable, OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -16,7 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './omegle.component.html',
   styleUrls: ['./omegle.component.css'],
 })
-export class OmegleComponent implements OnInit {
+export class OmegleComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private commonSrv: CommonService,
@@ -35,7 +35,8 @@ export class OmegleComponent implements OnInit {
   iceConfiguration = {
     iceServers: [
       {
-        urls: ['stun:stun3.l.google.com:19302'],
+        urls: ['stun:stun.l.google.com:19302',
+        ],
       },
     ],
   };
@@ -212,6 +213,10 @@ export class OmegleComponent implements OnInit {
         this.socket.emit('force-disconnect', '');
       }
     };
+  }
+
+  ngOnDestroy() {
+    this.socket?.emit('force-disconnect','')
   }
 }
 
