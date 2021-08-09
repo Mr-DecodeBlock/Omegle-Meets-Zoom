@@ -16,7 +16,7 @@
     <video  class="video" [width]="this.width" [height]="this.height"  autoplay controls #localVideo ></video>
   </div>
   <div  fxLayout  fxLayoutAlign="space-around center">
-    <button  #endButton mat-raised-button (click)="closeVideoConnection(); endButton.disabled=true;" ><mat-icon>call_end</mat-icon>End Meeting.</button>
+    <button mat-raised-button #endButton (click)="closeVideoConnection(); endButton.disabled=true;" [disabled]="!this.isConnected" ><mat-icon>call_end</mat-icon>End Meeting.</button>
   </div>
 </div>
 </div>

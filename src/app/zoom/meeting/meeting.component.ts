@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {clientMessageResponse} from "../../app.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {BreakpointObserver} from "@angular/cdk/layout";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-meeting',
@@ -14,7 +15,7 @@ export class MeetingComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private router: Router,
               private matSnackBar : MatSnackBar,
               private breakPoint$: BreakpointObserver) {}
-  meetingId;
+  meetingId = ''
   socket;
   room;
   myOwnMessage;
@@ -35,7 +36,6 @@ export class MeetingComponent implements OnInit, OnDestroy {
   width;
   height;
   status = 'Meeting ID';
-
   ngOnInit(): void {
     this.breakPoint$.observe('(max-width:768px)').subscribe((data)=> {
       if(data.matches) {
@@ -51,12 +51,12 @@ export class MeetingComponent implements OnInit, OnDestroy {
     })
 
 
-    this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
-      path: '/zoom',
-    });
-    // this.socket = io('http://localhost:3000', {
+    // this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
     //   path: '/zoom',
     // });
+    this.socket = io('http://localhost:3000', {
+      path: '/zoom',
+    });
 
     this.start();
 
@@ -219,7 +219,6 @@ export class MeetingComponent implements OnInit, OnDestroy {
 
     this.localPeerConnection.onconnectionstatechange = (event) => {
       if (this.localPeerConnection.connectionState === 'disconnected') {
-        console.log('DISCONNECTED')
         this.matSnackBar.open(
           'User has Disconnected. Press Find For New User',
           'X',
@@ -230,8 +229,8 @@ export class MeetingComponent implements OnInit, OnDestroy {
             panelClass: ['snackbar-class'],
           }
         );
-        this.isConnected = false;
-        this.socket.emit('force-disconnect', '');
+        this.closeVideoConnection()
+
       }
     };
   }
