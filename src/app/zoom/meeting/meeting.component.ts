@@ -24,7 +24,7 @@ export class MeetingComponent implements OnInit {
   iceConfiguration = {
     iceServers: [
       {
-        urls: ['stun:stun3.l.google.com:19302'],
+        urls: ['stun:stun3.l.google.com:19305'],
       },
     ],
   };
@@ -34,47 +34,44 @@ export class MeetingComponent implements OnInit {
     this.socket = io('http://localhost:3000', {
       path: '/zoom',
     });
+    this.start();
     // this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
     //   path: '/omegle',
     // });
 
     this.meetingId = this.route.snapshot.params.meetingId;
     if (this.meetingId) {
-      console.log('joining rooom');
+      this.room = this.meetingId;
       //join otherwise set it.
       this.socket.emit('join-room', this.meetingId);
       this.socket.on('join-room', (flag) => {
         if (flag === 'true') {
-          this.setUpLocalVideo();
-          this.start();
           let messageModel: clientMessageResponse = {
             room: this.meetingId,
             message: 'USERS CONNECTED',
           };
           this.socket.emit('hello-message', messageModel);
 
-        } else {
+        }
+        else {
           this.router.navigate(['/zoom']);
         }
       });
-    } else {
+    }
+    else {
       console.log('setting rooom');
-
       this.socket.emit('create-room', '');
-
       this.socket.on('create-room', (room) => {
         this.room = room;
       });
-      this.setUpLocalVideo();
-      this.start();
-
 
     }
   }
 
   start() {
-    console.log('already,start function fired.')
+    this.setUpLocalVideo();
     this.initiateWebRtc();
+    console.log('already,start function fired.')
 
 
     this.socket.on('hello-message', (body) => {
@@ -118,10 +115,10 @@ export class MeetingComponent implements OnInit {
         //setting user 1 remote description from user2
         if (body?.info === '2') {
           console.log('setting answer for user 1');
-          console.log(body.message);
           this.localPeerConnection.setRemoteDescription(
             new RTCSessionDescription(body.message)
           );
+          console.log('all set')
           this.isConnected = true;
         }
 
@@ -197,6 +194,7 @@ export class MeetingComponent implements OnInit {
 
     this.localPeerConnection.onconnectionstatechange = (event) => {
       if (this.localPeerConnection.connectionState === 'disconnected') {
+        console.log('DISCONNECTED')
         this.matSnackBar.open(
           'User has Disconnected. Press Find For New User',
           'X',
