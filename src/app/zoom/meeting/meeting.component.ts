@@ -51,12 +51,12 @@ export class MeetingComponent implements OnInit, OnDestroy {
     })
 
 
-    // this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
-    //   path: '/zoom',
-    // });
-    this.socket = io('http://localhost:3000', {
+    this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
       path: '/zoom',
     });
+    // this.socket = io('http://localhost:3000', {
+    //   path: '/zoom',
+    // });
 
     this.start();
 
