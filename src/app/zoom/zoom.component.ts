@@ -20,6 +20,9 @@ export class ZoomComponent implements OnInit {
     this.socket = io('http://localhost:3000', {
       path: '/zoom',
     });
+    // this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
+    //   path: '/omegle',
+    // });
   }
 
   checkCode(code: string) {

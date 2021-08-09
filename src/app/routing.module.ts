@@ -26,6 +26,7 @@ const routes: Routes = [
       { path: 'meeting/:meetingId', component: MeetingComponent },
       { path: 'meeting', component: MeetingComponent },
     ],
+    canDeactivate: [CanDeactivateService],
   },
 
   {
