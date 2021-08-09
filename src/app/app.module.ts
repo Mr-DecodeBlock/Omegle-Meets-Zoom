@@ -20,6 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MeetingComponent } from './zoom/meeting/meeting.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { ShortenPipe } from './pipes/shorten.pipe';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     OmegleComponent,
     ErrorPageComponent,
     MeetingComponent,
+    ShortenPipe,
   ],
   imports: [
     BrowserModule,

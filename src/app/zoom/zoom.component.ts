@@ -25,13 +25,14 @@ export class ZoomComponent implements OnInit, OnDestroy {
   }
 
   checkCode(code: string) {
+    this.status='Please Wait..'
 
-    // this.socket = io('http://localhost:3000', {
-    //   path: '/zoom',
-    // });
-    this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
+    this.socket = io('http://localhost:3000', {
       path: '/zoom',
     });
+    // this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
+    //   path: '/zoom',
+    // });
     //check if any room available on server with this roomId
     this.socket.emit('room-available', code);
     this.socket.on('room-available', (body) => {

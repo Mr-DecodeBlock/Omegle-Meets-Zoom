@@ -31,12 +31,12 @@ export class MeetingComponent implements OnInit, OnDestroy {
   isConnected = false;
 
   ngOnInit(): void {
-    this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
-      path: '/zoom',
-    });
-    // this.socket = io('http://localhost:3000', {
+    // this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
     //   path: '/zoom',
     // });
+    this.socket = io('http://localhost:3000', {
+      path: '/zoom',
+    });
     this.start();
 
   }
@@ -225,4 +225,9 @@ export class MeetingComponent implements OnInit, OnDestroy {
     this.socket?.emit('force-disconnect','')
   }
 
+  copyMeetingId(inputElement) {
+    inputElement.select()
+    document.execCommand('copy');
+    inputElement.setSelectionRange(0, 0);
+  }
 }

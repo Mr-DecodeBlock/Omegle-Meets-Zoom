@@ -1,5 +1,19 @@
 <!--for large screen -->
-<h4 class="text-center">This Room Id is {{room}}</h4>
+<div fxLayout="column" fxLayoutAlign="center center">
+  <p class="text-center" style="padding-top: 1%">Meeting ID</p>
+  <mat-form-field appearance="fill">
+    <input type="text"
+           matInput
+           [value]="this.room  | shorten"
+           readonly
+           #inputMeetingId>
+    <mat-icon  matSuffix >
+      content_copy</mat-icon>
+  </mat-form-field>
+
+</div>
+
+
 <div class="main-container">
   <div  class="m-3" fxLayout fxLayoutAlign="center center">
     <video class="video" autoplay #localVideo ></video>

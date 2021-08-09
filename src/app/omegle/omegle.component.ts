@@ -49,15 +49,16 @@ export class OmegleComponent implements OnInit, OnDestroy {
   }
 
   start() {
+    this.setCounter()
     this.initiateWebRtc();
     this.spinner.show('MainScreenSpinner');
     this.disableDisconnectCall = false;
-    this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
-      path: '/omegle',
-    });
-    // this.socket = io('http://localhost:3000', {
+    // this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
     //   path: '/omegle',
     // });
+    this.socket = io('http://localhost:3000', {
+      path: '/omegle',
+    });
     this.socket.on('room', (room) => {
       this.room = room;
       let messageModel: clientMessageResponse = {
@@ -213,6 +214,26 @@ export class OmegleComponent implements OnInit, OnDestroy {
         this.socket.emit('force-disconnect', '');
       }
     };
+  }
+
+  setCounter(){
+    setTimeout(()=> {
+      if(!this.isConnected) {
+        this.closeVideoConnection()
+        this.spinner.hide('MainScreenSpinner')
+        this.matSnackBar.open(
+          'No User is available right now.Please try later.',
+          'X',
+          {
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+            duration: 4000,
+            panelClass: ['snackbar-class'],
+          }
+        );
+      }
+    },8000)
+
   }
 
   ngOnDestroy() {

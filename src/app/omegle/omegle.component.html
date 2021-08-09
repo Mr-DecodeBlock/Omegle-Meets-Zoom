@@ -5,7 +5,7 @@
     <video  class="video" autoplay #remoteVideo [hidden]="!isConnected" ></video>
   </div>
   <div  fxLayout  fxLayoutAlign="space-around center">
-    <button style="background-color: seagreen"  mat-raised-button (click)="start()"><mat-icon>video_camera_front</mat-icon> Find Someone!</button>
+    <button style="background-color: lightseagreen; color : white"  mat-raised-button (click)="start()"><mat-icon>video_camera_front</mat-icon> Find Someone!</button>
     <button  mat-raised-button (click)="closeVideoConnection()" [disabled]="disableDisconnectCall" ><mat-icon>call_end</mat-icon>Disconnect!</button>
   </div>
 </div>

@@ -6,8 +6,11 @@
     <a   mat-list-item routerLink="/home">
       Omegle <mat-icon>videocam</mat-icon> Zoom
     </a>
-    <a mat-list-item *ngIf="showZoomRoute"  routerLink="/omegle">Call Someone you dont know?</a>
-    <a mat-list-item *ngIf="showOmegleRoute" routerLink="/zoom">Call Someone you know?</a>
+  </mat-nav-list>
+  <div fxFlex="80"></div>
+  <mat-nav-list>
+    <a mat-list-item *ngIf="showZoomRoute"  routerLink="/omegle"><mat-icon>video_call</mat-icon>  Call Someone You Dont Know?</a>
+    <a mat-list-item *ngIf="showOmegleRoute" routerLink="/zoom"><mat-icon>video_call</mat-icon>  Call Someone You Know?</a>
 
   </mat-nav-list>
 
