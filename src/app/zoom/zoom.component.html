@@ -1,18 +1,21 @@
-<!--for large screen-->
+<!--for large and mobile screen-->
 <div class="main-container" *ngIf="codeInput" fxLayout="column" fxLayoutAlign="center center">
-  <div  >
     <mat-form-field >
       <mat-label>Enter Meeting ID</mat-label>
       <input matInput
              type="text"
              (input)="this.status=''"
              #meetingCode>
-      <button matSuffix  mat-icon-button [disabled]="!meetingCode.value" (click)="checkCode(meetingCode.value)"><mat-icon>send</mat-icon></button>
+      <mat-icon matSuffix *ngIf="spinnerLoad"><mat-spinner diameter="20"></mat-spinner></mat-icon>
+      <button matSuffix  mat-icon-button [disabled]="!meetingCode.value"
+              (click)="checkCode(meetingCode.value)"><mat-icon>send</mat-icon>
+      </button>
       <mat-hint>{{status}}</mat-hint>
     </mat-form-field>
-  </div>
-<h5><b>OR</b></h5>
+<h5>OR</h5>
+
   <button mat-raised-button color="primary" (click)="this.codeInput = false" [routerLink]="['meeting']"><mat-icon>add</mat-icon>Create a Meeting</button>
+
 </div>
 
 <router-outlet></router-outlet>

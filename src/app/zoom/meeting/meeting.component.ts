@@ -1,10 +1,19 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { io } from 'socket.io-client';
 import { ActivatedRoute, Router } from '@angular/router';
-import {clientMessageResponse} from "../../app.component";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {BreakpointObserver} from "@angular/cdk/layout";
-import {MatButton} from "@angular/material/button";
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import {
+  clientMessageResponse,
+  CommonService,
+  iceConfiguration,
+} from '../../service/common.service';
 
 @Component({
   selector: 'app-meeting',
@@ -12,61 +21,38 @@ import {MatButton} from "@angular/material/button";
   styleUrls: ['./meeting.component.css'],
 })
 export class MeetingComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute, private router: Router,
-              private matSnackBar : MatSnackBar,
-              private breakPoint$: BreakpointObserver) {}
-  meetingId = ''
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private matSnackBar: MatSnackBar,
+    private breakPoint$: BreakpointObserver,
+    private commonSrv: CommonService
+  ) {}
+  meetingId = '';
   socket;
-  room;
+  room = '';
   myOwnMessage;
   localPeerConnection;
   remoteMediaStream = new MediaStream();
   @ViewChild('localVideo', { static: true }) localVideoHtmlElement: ElementRef;
   @ViewChild('remoteVideo', { static: true })
   remoteVideoHtmlElement: ElementRef;
-  iceConfiguration = {
-    iceServers: [
-      {
-        urls: ['stun:stun2.l.google.com:19305'],
-      },
-    ],
-  };
   isConnected = false;
   fxAlignment;
   width;
   height;
   status = 'Meeting ID';
+
   ngOnInit(): void {
-    this.breakPoint$.observe('(max-width:768px)').subscribe((data)=> {
-      if(data.matches) {
-        this.fxAlignment = 'column'
-        this.width = '330'
-        this.height = '250'
-      }
-      else {
-        this.fxAlignment = 'row'
-        this.width = '600'
-        this.height = '450'
-      }
-    })
-
-
-    // this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
-    //   path: '/zoom',
-    // });
-    this.socket = io('http://localhost:3000', {
-      path: '/zoom',
-    });
-
+    this.socket = this.commonSrv.localSocketIO();
+    this.breakPointObserver();
     this.start();
-
   }
 
   start() {
     this.setUpLocalVideo();
     this.initiateWebRtc();
-    console.log('already,start function fired.')
-
+    console.log('already,start function fired.');
 
     this.meetingId = this.route.snapshot.params.meetingId;
     if (this.meetingId) {
@@ -80,22 +66,17 @@ export class MeetingComponent implements OnInit, OnDestroy {
             message: 'USERS CONNECTED',
           };
           this.socket.emit('hello-message', messageModel);
-
-        }
-        else {
+        } else {
           this.router.navigate(['/zoom']);
         }
       });
-    }
-    else {
+    } else {
       console.log('setting rooom');
       this.socket.emit('create-room', '');
       this.socket.on('create-room', (room) => {
         this.room = room;
       });
-
     }
-
 
     this.socket.on('hello-message', (body) => {
       if (body === 'USERS CONNECTED') {
@@ -141,7 +122,7 @@ export class MeetingComponent implements OnInit, OnDestroy {
           this.localPeerConnection.setRemoteDescription(
             new RTCSessionDescription(body.message)
           );
-          console.log('all set')
+          console.log('all set');
           this.isConnected = true;
         }
 
@@ -175,7 +156,7 @@ export class MeetingComponent implements OnInit, OnDestroy {
   }
 
   initiateWebRtc() {
-    this.localPeerConnection = new RTCPeerConnection(this.iceConfiguration);
+    this.localPeerConnection = new RTCPeerConnection(iceConfiguration);
     navigator.mediaDevices
       .getUserMedia({ audio: true, video: true })
       .then((localMediaStream) => {
@@ -187,8 +168,8 @@ export class MeetingComponent implements OnInit, OnDestroy {
   }
 
   closeVideoConnection() {
-    this.status = 'Meeting has Ended!'
-    this.room = ''
+    this.status = 'Meeting has Ended!';
+    this.room = '';
     this.localPeerConnection.close();
     this.isConnected = false;
     this.socket.emit('force-disconnect', '');
@@ -229,8 +210,7 @@ export class MeetingComponent implements OnInit, OnDestroy {
             panelClass: ['snackbar-class'],
           }
         );
-        this.closeVideoConnection()
-
+        this.closeVideoConnection();
       }
     };
   }
@@ -244,12 +224,26 @@ export class MeetingComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.socket?.emit('force-disconnect','')
+    this.socket?.emit('force-disconnect', '');
   }
 
   copyMeetingId(inputElement) {
-    inputElement.select()
+    inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
+  }
+
+  breakPointObserver() {
+    this.breakPoint$.observe('(max-width:768px)').subscribe((data) => {
+      if (data.matches) {
+        this.fxAlignment = 'column';
+        this.width = '330';
+        this.height = '250';
+      } else {
+        this.fxAlignment = 'row';
+        this.width = '600';
+        this.height = '450';
+      }
+    });
   }
 }

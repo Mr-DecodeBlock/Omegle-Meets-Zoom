@@ -1,11 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { io } from 'socket.io-client';
-
-export type clientMessageResponse = {
-  room: string;
-  message: string;
-  info?: string;
-};
+import { Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',

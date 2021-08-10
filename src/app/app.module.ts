@@ -19,7 +19,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MeetingComponent } from './zoom/meeting/meeting.component';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ShortenPipe } from './pipes/shorten.pipe';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 

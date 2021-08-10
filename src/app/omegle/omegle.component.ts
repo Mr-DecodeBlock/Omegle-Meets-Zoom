@@ -6,9 +6,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { io } from 'socket.io-client';
-import { clientMessageResponse } from '../app.component';
 import { Router } from '@angular/router';
-import { CommonService } from '../service/common.service';
+import {clientMessageResponse, CommonService} from '../service/common.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {Observable} from "rxjs";
@@ -73,12 +72,12 @@ export class OmegleComponent implements OnInit, OnDestroy {
     this.initiateWebRtc();
     this.spinner.show('MainScreenSpinner');
     this.disableDisconnectCall = false;
-    this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
-      path: '/omegle',
-    });
-    // this.socket = io('http://localhost:3000', {
+    // this.socket = io('https://my-node-app-web-rtc.herokuapp.com', {
     //   path: '/omegle',
     // });
+    this.socket = io('http://localhost:3000', {
+      path: '/omegle',
+    });
     this.socket.on('room', (room) => {
       this.room = room;
       let messageModel: clientMessageResponse = {

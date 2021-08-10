@@ -23,10 +23,9 @@ const routes: Routes = [
     path: 'zoom',
     component: ZoomComponent,
     children: [
-      { path: 'meeting/:meetingId', component: MeetingComponent },
-      { path: 'meeting', component: MeetingComponent },
+      { path: 'meeting/:meetingId', component: MeetingComponent, canDeactivate: [CanDeactivateService], },
+      { path: 'meeting', component: MeetingComponent, canDeactivate: [CanDeactivateService], },
     ],
-    canDeactivate: [CanDeactivateService],
   },
 
   {

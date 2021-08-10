@@ -8,12 +8,17 @@ html, body {
 
 .main-container {
   height:85%;
-  padding-bottom: 2%;
+  padding-bottom: 1%;
 
 }
 
+/*panel class has to be define here i guess*/
 .snackbar-class {
   background: #d22929;
   color : white;
+}
+
+.video {
+  border : 3px solid #512888;
 }
 

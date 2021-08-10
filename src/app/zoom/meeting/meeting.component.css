@@ -2,12 +2,7 @@
   cursor : pointer;
 }
 
-.video {
-  border : 3px solid #512888;
-}
-
 .mat-raised-button{
-  width: 50%;
   background-color: red;
   color : white
 }
