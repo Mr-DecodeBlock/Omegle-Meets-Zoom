@@ -35,6 +35,6 @@
  
  
  
- 
- 
- 
+ ##Mobile Snapshot
+ ![Screen Shot 2021-08-12 at 2 11 52 PM](https://user-images.githubusercontent.com/24291795/129171164-f16ae8e5-b4a1-452f-ac87-f2cb5718bb41.png)
+
